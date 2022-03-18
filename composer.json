@@ -1,9 +1,10 @@
 {
     "name": "leonardovee/laravel-circuit-breaker",
-    "description": "An implementation of the Circuit Breaker pattern for Laravel Framework 9. ",
+    "description": "An implementation of the Circuit Breaker pattern for Laravel Framework 9",
     "keywords": [
         "leonardovee",
         "laravel",
+        "circuit-breaker",
         "laravel-circuit-breaker"
     ],
     "homepage": "https://github.com/leonardovee/laravel-circuit-breaker",
@@ -34,13 +35,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LeonardoVee\\Skeleton\\": "src",
-            "LeonardoVee\\Skeleton\\Database\\Factories\\": "database/factories"
+            "LeonardoVee\\CircuitBreaker\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LeonardoVee\\Skeleton\\Tests\\": "tests"
+            "LeonardoVee\\CircuitBreaker\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -49,15 +49,19 @@
         "test-coverage": "vendor/bin/pest --coverage"
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "LeonardoVee\\Skeleton\\SkeletonServiceProvider"
+                "LeonardoVee\\CircuitBreaker\\CircuitBreakerServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "LeonardoVee\\Skeleton\\Facades\\Skeleton"
+                "LeonardoVee": "LeonardoVee\\CircuitBreaker\\Facades\\CircuitBreaker"
             }
         }
     },

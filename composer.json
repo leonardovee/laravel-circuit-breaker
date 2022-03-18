@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "leonardovee/laravel-circuit-breaker",
+    "description": "An implementation of the Circuit Breaker pattern for Laravel Framework 9. ",
     "keywords": [
-        ":vendor_name",
+        "leonardovee",
         "laravel",
-        ":package_slug"
+        "laravel-circuit-breaker"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/leonardovee/laravel-circuit-breaker",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Leonardo Vieira",
+            "email": "leoveeph@gmail.com",
             "role": "Developer"
         }
     ],
@@ -34,13 +34,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "LeonardoVee\\Skeleton\\": "src",
+            "LeonardoVee\\Skeleton\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "LeonardoVee\\Skeleton\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -54,10 +54,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "LeonardoVee\\Skeleton\\SkeletonServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "Skeleton": "LeonardoVee\\Skeleton\\Facades\\Skeleton"
             }
         }
     },

@@ -1,11 +1,11 @@
 # Laravel Circuit Breaker
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/:vendor_slug/:package_slug/run-tests?label=tests)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/:vendor_slug/:package_slug/Check%20&%20fix%20styling?label=code%20style)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/leonardovee/laravel-circuit-breaker.svg?style=flat-square)](https://packagist.org/packages/leonardovee/laravel-circuit-breaker)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/leonardovee/laravel-circuit-breaker/run-tests?label=tests)](https://github.com/leonardovee/laravel-circuit-breaker/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/leonardovee/laravel-circuit-breaker/Check%20&%20fix%20styling?label=code%20style)](https://github.com/leonardovee/laravel-circuit-breaker/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/leonardovee/laravel-circuit-breaker.svg?style=flat-square)](https://packagist.org/packages/leonardovee/laravel-circuit-breaker)
 
-An implementation of the Circuit Breaker pattern for Laravel Framework 9
+A straightforward implementation of the Circuit Breaker pattern for Laravel Framework 9 (using Memcached).
 
 ## Installation
 
@@ -25,10 +25,14 @@ This is the contents of the published config file:
 
 ```php
 return [
-    /**  The time that the CircuitBreaker should wait before transitioning from open to open. */
-    'openCircuitTimeWindow' => 60,
-    /** When the failure rate is equal or greater than the threshold the CircuitBreaker transitions to open */
-    'failureRateThreshold' => 50
+    'memcached-server' => [
+        'host' => '127.0.0.1',
+        'port' => 11211
+    ],
+    'circuit-breaker' => [
+        'failure-threshold' => 5,
+        'timeout' => 5
+    ]
 ];
 ```
 

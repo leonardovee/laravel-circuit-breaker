@@ -42,14 +42,14 @@ try {
     Http::get('https://my-service.com');
     
     /** Register a success on the circuit breaker */
-    CircuitBreaker::setSuccess('my-service');
+    CircuitBreaker::setSuccess(circuitName: 'https://my-service.com');
 } catch (Throwable $throwable) {
     /** Register a failure on the circuit breaker */
-    CircuitBreaker::setFailure('my-service');
+    CircuitBreaker::setFailure(circuitName: 'https://my-service.com');
 }
 
-/** Use to verify if the circuit is closed */
-if (CircuitBreaker::isAvailable('my-service')) {
+/** Use to verify if the circuit is closed or open */
+if (CircuitBreaker::isAvailable(circuitName: 'https://my-service.com')) {
     /** Do stuff */
 }
 ```

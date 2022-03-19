@@ -21,6 +21,7 @@ class CircuitBreaker
 
         if (self::isCircuitThresholdReached($circuitName)) {
             self::openCircuit($circuitName);
+
             return false;
         }
 

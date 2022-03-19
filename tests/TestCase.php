@@ -2,8 +2,8 @@
 
 namespace LeonardoVee\CircuitBreaker\Tests;
 
-use Orchestra\Testbench\TestCase as Orchestra;
 use LeonardoVee\CircuitBreaker\CircuitBreakerServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

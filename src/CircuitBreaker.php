@@ -20,14 +20,18 @@ class CircuitBreaker
         if (self::isCircuitOpen(circuitName: $circuitName)) {
             if (self::shouldOpenHalfCircuit(circuitName: $circuitName)) {
                 self::openHalfCircuit(circuitName: $circuitName);
+
                 return true;
             }
+
             return false;
         }
         if (self::isCircuitThresholdReached(circuitName: $circuitName)) {
             self::openCircuit(circuitName: $circuitName);
+
             return false;
         }
+
         return true;
     }
 
@@ -63,7 +67,8 @@ class CircuitBreaker
 
     private static function shouldOpenHalfCircuit(string $circuitName): bool
     {
-        $openCircuitTime = (double) self::getOpenCircuitTime($circuitName);
+        $openCircuitTime = (float) self::getOpenCircuitTime($circuitName);
+
         return (microtime(as_float: true) - $openCircuitTime) > config(key: 'circuit-breaker.circuit-breaker.half-open-timeout');
     }
 
@@ -75,6 +80,7 @@ class CircuitBreaker
     private static function isCircuitHalfOpen(string $circuitName): bool
     {
         $circuitState = self::getState($circuitName);
+
         return $circuitState === CircuitBreakerStates::HALF_OPEN->value;
     }
 
@@ -86,8 +92,9 @@ class CircuitBreaker
 
     private static function isCircuitOpen(string $circuitName): bool
     {
-         $circuitState = self::getState($circuitName);
-         return $circuitState === CircuitBreakerStates::OPEN->value;
+        $circuitState = self::getState($circuitName);
+
+        return $circuitState === CircuitBreakerStates::OPEN->value;
     }
 
     private static function isCircuitThresholdReached(string $circuitName): bool
@@ -96,6 +103,7 @@ class CircuitBreaker
         $failuresCount = $memcachedServer->get(
             key: self::$memcachedServerPrefix . $circuitName . self::memcachedServerCircuitFailuresCountSuffix
         );
+
         return $failuresCount > config(key: 'circuit-breaker.circuit-breaker.failure-threshold');
     }
 
@@ -111,6 +119,7 @@ class CircuitBreaker
     private static function getOpenCircuitTime(string $circuitName): string
     {
         $memcachedServer = self::getMemcachedServer();
+
         return $memcachedServer->get(
             key: self::$memcachedServerPrefix . $circuitName . self::memcachedServerOpenCircuitTimeSuffix
         );
@@ -119,6 +128,7 @@ class CircuitBreaker
     private static function getState(string $circuitName): string
     {
         $memcachedServer = self::getMemcachedServer();
+
         return $memcachedServer->get(
             key: self::$memcachedServerPrefix . $circuitName . self::memcachedServerCircuitState
         );
@@ -141,6 +151,7 @@ class CircuitBreaker
             host: config(key: 'circuit-breaker.memcached-server.host') ?? self::$memcachedServerHost,
             port: config(key: 'circuit-breaker.memcached-server.port') ?? self::$memcachedServerPort
         );
+
         return $memcachedServer;
     }
 }

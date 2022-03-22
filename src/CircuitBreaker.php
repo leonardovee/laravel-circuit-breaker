@@ -2,6 +2,7 @@
 
 namespace LeonardoVee\CircuitBreaker;
 
+use LeonardoVee\CircuitBreaker\Enums\CircuitBreakerStates;
 use Memcached;
 
 class CircuitBreaker
@@ -11,16 +12,16 @@ class CircuitBreaker
     private static string $memcachedServerPrefix = 'circuit-breaker-';
 
     private const memcachedServerCircuitFailuresCountSuffix = '-failures-count';
-    private const memcachedServerCircuitOpenSuffix = '-is-open';
+    private const memcachedServerCircuitState = '-state';
 
     public static function isAvailable(string $circuitName): bool
     {
-        if (self::isCircuitOpen($circuitName)) {
+        if (self::isCircuitOpen(circuitName: $circuitName)) {
             return false;
         }
 
         if (self::isCircuitThresholdReached($circuitName)) {
-            self::openCircuit($circuitName);
+            self::setState(circuitName: $circuitName, state: CircuitBreakerStates::OPEN);
 
             return false;
         }
@@ -72,11 +73,9 @@ class CircuitBreaker
 
     private static function isCircuitOpen(string $circuitName): bool
     {
-        $memcachedServer = self::getMemcachedServer();
+         $circuitState = self::getState($circuitName);
 
-        return $memcachedServer->get(
-            key: self::$memcachedServerPrefix . $circuitName . self::memcachedServerCircuitOpenSuffix
-        );
+         return $circuitState === CircuitBreakerStates::OPEN->value;
     }
 
     private static function isCircuitThresholdReached(string $circuitName): bool
@@ -90,13 +89,22 @@ class CircuitBreaker
         return $failuresCount > config(key: 'circuit-breaker.circuit-breaker.failure-threshold');
     }
 
-    private static function openCircuit(string $circuitName): void
+    private static function getState(string $circuitName): string
+    {
+        $memcachedServer = self::getMemcachedServer();
+
+        return $memcachedServer->get(
+            key: self::$memcachedServerPrefix . $circuitName . self::memcachedServerCircuitState
+        );
+    }
+
+    private static function setState(string $circuitName, CircuitBreakerStates $state): void
     {
         $memcachedServer = self::getMemcachedServer();
 
         $memcachedServer->set(
-            key: self::$memcachedServerPrefix . $circuitName . self::memcachedServerCircuitOpenSuffix,
-            value: true,
+            key: self::$memcachedServerPrefix . $circuitName . self::memcachedServerCircuitState,
+            value: $state->value,
             expiration: config(key: 'circuit-breaker.circuit-breaker.timeout')
         );
     }

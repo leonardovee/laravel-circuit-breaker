@@ -1,8 +1,5 @@
 <?php
 
-/**
- * Config for \LeonardoVee\CircuitBreaker\CircuitBreaker
- */
 return [
     'memcached-server' => [
         'host' => '127.0.0.1',

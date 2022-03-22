@@ -7,6 +7,7 @@ return [
     ],
     'circuit-breaker' => [
         'failure-threshold' => 5,
-        'timeout' => 5
+        'half-open-timeout' => 5,
+        'timeout' => 10
     ]
 ];

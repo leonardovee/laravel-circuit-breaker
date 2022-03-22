@@ -36,6 +36,7 @@ class CircuitBreaker
         $memcachedServer->delete(
             key: self::$memcachedServerPrefix . $circuitName . self::memcachedServerCircuitFailuresCountSuffix
         );
+        self::setState(circuitName: $circuitName, state: CircuitBreakerStates::CLOSED);
     }
 
     public static function setFailure(string $circuitName)
